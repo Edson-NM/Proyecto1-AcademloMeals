@@ -2,22 +2,29 @@
 const { Restaurant } = require('../models/restaurants.model');
 const { User } = require('../models/users.model');
 
-const restaurantAdmin = async (req, res, next) => {
+const adminUser = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const { user } = req;
 
-    const adminUser = await User.findOne({ where: { id, role: 'admin' } });
+    const adminUserValue = await User.findOne({
+      where: { id: user.id, role: 'admin' },
+    });
 
-    if (!adminUser) {
-      res.status(404).json({
+    if (!adminUserValue) {
+      return res.status(404).json({
         status: 'error',
         message: 'User have not admin credentials',
       });
     }
+    const restaurant = await Restaurant.findOne({ where: { id } });
 
-    // req.adminUser = adminUser;
+    req.restaurant = restaurant;
+
     next();
   } catch (error) {
     console.log(error);
   }
 };
+
+module.exports = { adminUser };

@@ -57,7 +57,7 @@ const createRestaurantValidators = [
     .notEmpty()
     .withMessage('Address can not be an empty value')
     .isLength({ min: 20 })
-    .withMessage('Address must include at least characters'),
+    .withMessage('Address must include at least 20 characters'),
   body('rating')
     .isNumeric()
     .withMessage('Rating must be a numeric value')

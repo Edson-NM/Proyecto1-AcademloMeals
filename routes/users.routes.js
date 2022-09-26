@@ -8,6 +8,7 @@ const {
   deleteUser,
   getAllOrders,
   getOrderDetail,
+  getAllUsers,
 } = require('../controllers/users.controllers');
 
 // Middlewares

@@ -95,16 +95,17 @@ const deleteUser = async (req, res) => {
   try {
     const { user } = req;
 
-    await user.delete({ status: 'disabled' });
+    await user.update({ status: 'disabled' });
 
-    res.status(204).json({
+    res.status(201).json({
       status: 'success',
-      message: 'User has been successfullys deleted',
+      message: 'User has been successfully removed',
     });
   } catch (error) {
     console.log(error);
   }
 };
+
 const getAllOrders = async (req, res) => {
   try {
     const { user } = req;
