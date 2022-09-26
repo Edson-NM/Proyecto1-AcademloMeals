@@ -1,4 +1,5 @@
 // Model
+const { Meal } = require('../models/meals.model');
 const { Restaurant } = require('../models/restaurants.model');
 const { User } = require('../models/users.model');
 
@@ -18,8 +19,10 @@ const adminUser = async (req, res, next) => {
       });
     }
     const restaurant = await Restaurant.findOne({ where: { id } });
+    const meal = await Meal.findOne({ where: { id } });
 
     req.restaurant = restaurant;
+    req.meal = meal;
 
     next();
   } catch (error) {

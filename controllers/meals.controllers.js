@@ -68,12 +68,31 @@ const GetOneMeal = async (req, res) => {
 };
 const updateMeal = async (req, res) => {
   try {
+    const { meal } = req;
+    const { name, price } = req.body;
+
+    await meal.update({ name, price });
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        meal,
+      },
+    });
   } catch (error) {
     console.log(error);
   }
 };
 const deleteMeal = async (req, res) => {
   try {
+    const { meal } = req;
+
+    await meal.update({ status: 'disabled' });
+
+    res.status(201).json({
+      status: 'error',
+      message: 'Meal with given ID has been succesfully removed',
+    });
   } catch (error) {
     console.log(error);
   }
