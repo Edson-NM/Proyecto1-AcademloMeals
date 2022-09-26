@@ -10,12 +10,22 @@ const {
   getOrderDetail,
 } = require('../controllers/users.controllers');
 
+// Middlewares
+const { userExist } = require('../middlewares/users.middleswares');
+const {
+  createUserValidators,
+} = require('../middlewares/validators.middlewares');
+const { protectSession } = require('../middlewares/auth.middlewares');
+
 const usersRouter = express.Router();
 
-usersRouter.post('/signup', createUser);
+usersRouter.post('/signup', createUserValidators, createUser);
 usersRouter.post('/login', loginUser);
-usersRouter.patch('/:id', updateUser);
-usersRouter.delete('/:id', deleteUser);
+
+usersRouter.use(protectSession);
+
+usersRouter.patch('/:id', userExist, updateUser);
+usersRouter.delete('/:id', userExist, deleteUser);
 usersRouter.get('/orders', getAllOrders);
 usersRouter.get('/orders/:id', getOrderDetail);
 

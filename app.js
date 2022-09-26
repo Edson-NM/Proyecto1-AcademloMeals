@@ -12,10 +12,10 @@ const app = express();
 app.use(express.json());
 
 // Endpoints
-app.use('/api/v1/users', usersRouter);
-app.use('/api/v1/users', restaurantsRouter);
-app.use('/api/v1/users', mealsRouter);
-app.use('/api/v1/users', ordersRouter);
+app.use('/api/V1/users', usersRouter);
+app.use('/api/V1/restaurants', restaurantsRouter);
+app.use('/api/V1/meals', mealsRouter);
+app.use('/api/V1/orders', ordersRouter);
 
 app.all('*', (req, res) => {
   res.status().json({

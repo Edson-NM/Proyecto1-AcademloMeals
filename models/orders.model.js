@@ -26,6 +26,7 @@ const Order = db.define('order', {
   status: {
     type: DataTypes.STRING,
     allowNull: false,
+    defaultValue: 'active',
   },
 });
 

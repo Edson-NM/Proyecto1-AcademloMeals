@@ -9,16 +9,17 @@ const initModels = () => {
   User.hasMany(Order, { foreignKey: 'userId' });
   Order.belongsTo(User);
 
-  // M Users <---> M Restaurants
-  User.belongsToMany(Restaurant, { through: 'review', foreignKey: 'userId' });
-  Restaurant.belongsToMany(User, {
-    through: 'review',
-    foreignKey: 'restaurantId',
-  });
+  // 1 User <---> M Reviews
+  User.hasMany(Review, { foreignKey: 'userId' });
+  Review.belongsTo(User);
 
   //1 Restaurant <---> M Meals
   Restaurant.hasMany(Meal, { foreignKey: 'restaurantId' });
   Meal.belongsTo(Restaurant);
+
+  // 1 Restaurant <---> M Reviews
+  Restaurant.hasMany(Review, { foreignKey: 'restaurantId' });
+  Review.belongsTo(Restaurant);
 
   //1 Meal <---> 1 Order
   Meal.hasOne(Order);
