@@ -23,7 +23,7 @@ const initModels = () => {
 
   //1 Meal <---> 1 Order
   Meal.hasOne(Order);
-  Order.hasOne(Meal);
+  Order.belongsTo(Meal);
 };
 
 module.exports = { initModels };

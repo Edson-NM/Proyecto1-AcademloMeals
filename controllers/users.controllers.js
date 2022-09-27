@@ -11,6 +11,7 @@ const dotenv = require('dotenv');
 const { User } = require('../models/users.model');
 const { Restaurant } = require('../models/restaurants.model');
 const { Order } = require('../models/orders.model');
+const { Meal } = require('../models/meals.model');
 
 dotenv.config({ path: './' });
 
@@ -108,9 +109,24 @@ const deleteUser = async (req, res) => {
 
 const getAllOrders = async (req, res) => {
   try {
-    const { user } = req;
+    const { userIdToken } = req;
 
-    const orders = await Order.findAll({ where: { userId: user.id } });
+    const orders = await Order.findAll({
+      where: { userId: userIdToken },
+      attributes: ['id', 'totalPrice', 'quantity', 'status'],
+      include: [
+        {
+          model: Meal,
+          attributes: ['id', 'name', 'price'],
+          include: [
+            {
+              model: Restaurant,
+              attributes: ['id', 'name', 'address', 'rating'],
+            },
+          ],
+        },
+      ],
+    });
 
     res.status(200).json({
       status: 'success',
@@ -124,6 +140,31 @@ const getAllOrders = async (req, res) => {
 };
 const getOrderDetail = async (req, res) => {
   try {
+    const { id } = req.params;
+
+    const orders = await Order.findOne({
+      where: { id },
+      attributes: ['id', 'totalPrice', 'quantity', 'status'],
+      include: [
+        {
+          model: Meal,
+          attributes: ['id', 'name', 'price'],
+          include: [
+            {
+              model: Restaurant,
+              attributes: ['id', 'name', 'address', 'rating'],
+            },
+          ],
+        },
+      ],
+    });
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        orders,
+      },
+    });
   } catch (error) {
     console.log(error);
   }

@@ -1,5 +1,4 @@
 // Models
-const { where } = require('sequelize');
 const { Restaurant } = require('../models/restaurants.model');
 const { Review } = require('../models/reviews.model');
 
@@ -25,7 +24,12 @@ const getAllActiveRestaurants = async (req, res) => {
     const restaurant = await Restaurant.findAll({
       where: { status: 'active' },
       attributes: ['id', 'name', 'address', 'rating'],
-      include: [{ model: Review, attributes: ['comment', 'rating'] }],
+      include: [
+        {
+          model: Review,
+          attributes: ['id', 'comment', 'rating'],
+        },
+      ],
     });
 
     res.status(200).json({
@@ -49,8 +53,8 @@ const getRestaurantById = async (req, res) => {
       include: [
         {
           model: Review,
-          attributes: ['comment', 'rating'],
-          where: { status: 'deleted' },
+          attributes: ['id', 'comment', 'rating'],
+          where: { status: 'active' },
         },
       ],
     });

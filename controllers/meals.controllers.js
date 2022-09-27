@@ -23,11 +23,11 @@ const GetAllMeals = async (req, res) => {
   try {
     const meals = await Meal.findAll({
       where: { status: 'active' },
-      attributes: ['name', 'price'],
+      attributes: ['id', 'name', 'price'],
       include: [
         {
           model: Restaurant,
-          attributes: ['name'],
+          attributes: ['id', 'name'],
         },
       ],
     });
@@ -47,11 +47,11 @@ const GetOneMeal = async (req, res) => {
     const { id } = req.params;
     const meals = await Meal.findAll({
       where: { id, status: 'active' },
-      attributes: ['name', 'price'],
+      attributes: ['id', 'name', 'price'],
       include: [
         {
           model: Restaurant,
-          attributes: ['name'],
+          attributes: ['id', 'name'],
         },
       ],
     });

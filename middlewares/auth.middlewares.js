@@ -24,7 +24,7 @@ const protectSession = async (req, res, next) => {
     if (!token) {
       return res.status(403).json({
         status: 'error',
-        message: 'Invalid session',
+        message: 'Invalid token',
       });
     }
 
